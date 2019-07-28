@@ -1,0 +1,16 @@
+exp - Expense Buddy console (command-line version)
+
+Use for:
+- Entering expenses
+- Tracking monthly and yearly summaries
+
+Dependencies:
+- Unix shell, awk
+
+License:
+  MIT
+
+Contact:
+  Twitter: @robdelacruz
+  Source: http://github.com/robdelacruz/witness
+

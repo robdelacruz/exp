@@ -1,0 +1,31 @@
+Commands:
+
+exp add "grab" 260.0 *commute 04-01
+exp add "grab" 260.0 *commute 2019-04-01
+exp add (interactive prompt)
+
+exp remove 2019-04-01 "grab" #commute (remove entries matching date, desc, cat)
+exp remove 2019-04-01 "grab" (remove entries matching date, desc)
+
+exp list 2019 (year transactions)
+exp list 2019-04 (month transactions)
+exp list 2019-04-01 (day transactions)
+exp list 2019-04-01 2019-07-31 (range transactions)
+
+exp list cat 2019 (year transactions of category cat)
+exp list cat 2019-04 (month transactions of category cat)
+exp list cat 2019-04-01 (day transactions of category cat)
+exp list cat 2019-04-01 2019-07-31 (range transactions of category cat)
+
+exp recent n (last n entries)
+exp recent (last [default n] entries)
+
+exp totals-month 2019-04 (month category totals)
+exp totals-year 2019 (year category totals)
+exp totals 2019-04-01 2019-07-31 (range category totals)
+
+exp search "text" (entries matching [text] in desc)
+exp search #cat text (entries matching [text] in desc of category [cat])
+
+exp cat (list all entered categories)
+
