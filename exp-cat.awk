@@ -12,16 +12,8 @@ function is_yyyy_mm_dd(s) {
     return s ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/
 }
 
-function is_cat(s) {
-    if (is_yyyy(s) || is_yyyy_mm(s) || is_yyyy_mm_dd(s)) {
-        return 0
-    }
-    return 1
-}
-
 function print_params() {
     print "------------------------------"
-    printf("cat: '%s'\n", cat)
     printf("yyyy: '%s'\n", yyyy)
     printf("yyyy_mm: '%s'\n", yyyy_mm)
     printf("yyyy_mm_dd: '%s'\n", yyyy_mm_dd)
@@ -38,13 +30,10 @@ BEGIN {
     # Specify an expenses file, ex. 'items.txt'
     #   exp-list.awk -v expfile="items.txt" [cat] [startdt] [enddt]
     #
-    # Unlike traditional awk scripts, you can't specify the input files as args in this one.
+    # Any additional cmd arguments will be flagged as an error.
     #
 
-    # Separator: single semi-colon followed by any number of whitespace.
-    FS=";[\t ]*"
-
-    # expense file is determined by the following settings, in order of priority:
+    # expense input file is determined by the following settings, in order of priority:
     # awk -v expfile="expenses.txt" (pre-set expfile var)
     # EXPFILE="expenses.txt"        (EXPFILE environment var)
     # "~/.expenses"                 (default, if none of the above were set)
@@ -57,7 +46,9 @@ BEGIN {
         }
     }
 
-    cat = ""
+    # Fields are separated by a semi-colon followed by zero or more whitespace chars.
+    FS=";[\t ]*"
+
     yyyy = ""
     yyyy_mm = ""
     yyyy_mm_dd = ""
@@ -65,12 +56,6 @@ BEGIN {
     enddt = ""
 
     i=1
-    if (is_cat(ARGV[i])) {
-        cat = ARGV[i]
-        ARGV[i]=""
-        i++
-    }
-
     if (is_yyyy(ARGV[i])) {
         yyyy = "^" ARGV[i]
         ARGV[i]=""
@@ -118,9 +103,41 @@ BEGIN {
 }
 
 END {
+    # Print categories from highest to lowest total expense amount.
+    # Category subtotals are stored in cat_total array. Ex.
+    #   cat_total["commute"]:  120.35
+    #   cat_total["grocery"]:  150.50
+    #   cat_total["dine_out"]: 200.00
+    #   ...
+
+    longest_catlen = 0
+    for (cat in cat_total) {
+        if (length(cat) > longest_catlen) {
+            longest_catlen = length(cat)
+        }
+    }
+
+    sum_amt = 0.0
+    for (;;) {
+        high_val = 0.0
+        high_cat = ""
+        for (cat in cat_total) {
+            if (cat_total[cat] >= high_val) {
+                high_cat = cat
+                high_val = cat_total[high_cat]
+            }
+        }
+        if (high_cat == "") break
+
+        printf("%-*s   %12.2f\n", longest_catlen, high_cat, cat_total[high_cat])
+        sum_amt += cat_total[high_cat]
+
+        delete cat_total[high_cat]
+    }
+
     if (sum_amt > 0) {
-        printf("--------------------------------------------------------------------\n")
-        printf("%-12s %-30s %9.2f    %-10s\n", "Totals", "", sum_amt, "")
+        printf("----------------------------\n")
+        printf("%-*s   %12.2f\n", longest_catlen, "Totals", sum_amt)
     }
 }
 
@@ -136,14 +153,13 @@ END {
 # Ex. 2019-07-27;01:16;cat food at rustan's;123.45;grocery
 #
 
-function print_rec() {
-    printf("%-12s %-30s %9.2f  %-10s\n", $1, substr($3, 0, 30), $4, $5)
-
-    sum_amt = sum_amt + $4
+function process_rec() {
+    # cat_total[category] += amt
+    cat_total[$5] += $4
 }
 
-(!cat || $5 == cat) && (yyyy && $1 ~ yyyy)          { print_rec(); next }
-(!cat || $5 == cat) && (yyyy_mm && $1 ~ yyyy_mm)    { print_rec(); next }
-(!cat || $5 == cat) && (yyyy_mm_dd && $1 == yyyy_mm_dd)  { print_rec(); next }
-(!cat || $5 == cat) && ($1 >= startdt && $1 <= enddt)    { print_rec(); next }
+yyyy && $1 ~ yyyy               { process_rec(); next }
+yyyy_mm && $1 ~ yyyy_mm         { process_rec(); next }
+yyyy_mm_dd && $1 == yyyy_mm_dd  { process_rec(); next }
+$1 >= startdt && $1 <= enddt    { process_rec(); next }
 
