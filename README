@@ -10,6 +10,71 @@ Dependencies:
 License:
   MIT
 
+Manual:
+
+Add an expense -
+  exp-add.sh "bus fare" 12.00 commute 2019-04-01 08:00
+  exp-add.sh "buy cat food" 160.50 grocery
+
+List all expense items by year, year/month, year/month/day, date range
+  $ exp-list.awk 2019
+  $ exp-list.awk 2019-04
+  $ exp-list.awk 2019-04-01
+  $ exp-list.awk 2019-04-01 2019-04-30
+
+    (sample output)
+
+    2017-01-06   cedula pasig                       41.00  utilities 
+    2017-01-06   pbco coffee                        85.00  coffee    
+    2017-01-06   peri peri capital commons         441.00  dine_out  
+    2017-01-06   taxi to capital commons           100.00  commute   
+    2017-01-06   uber to home                      169.00  commute   
+    2017-01-06   uber to pasig                     143.00  commute   
+    --------------------------------------------------------------------
+    Totals                                         979.00              
+
+
+List category totals by year, year/month, year/month/day, date range
+  $ exp-cat.awk 2019
+  $ exp-cat.awk 2019-04
+  $ exp-cat.awk 2019-04-01
+  $ exp-cat.awk 2019-04-01 2019-04-30
+
+    (sample output)
+
+    grocery         92216.79
+    dine_out        43159.97
+    medical         38400.00
+    commute         26447.00
+    household       10865.25
+    coffee           2407.50
+    utilities        1000.00
+    movie             585.00
+    ----------------------------
+    Totals         215081.51
+
+
+List year totals -
+  $ exp-ytd.awk 2019
+
+    (sample output)
+
+    January         55858.18
+    February        25758.60
+    March           37618.26
+    April           18572.55
+    May             21870.64
+    June            23050.40
+    July            32352.88
+    August              0.00
+    September           0.00
+    October             0.00
+    November            0.00
+    December            0.00
+    ------------------------
+    Totals         215081.51
+  
+
 Contact:
   Twitter: @robdelacruz
   Source: http://github.com/robdelacruz/witness
