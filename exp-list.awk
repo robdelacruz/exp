@@ -101,6 +101,7 @@ BEGIN {
 
     if (i < ARGC) {
         printf("Illegal parameter '%s'\n", ARGV[i])
+        is_exit = 1
         exit 1
     }
 
@@ -118,6 +119,8 @@ BEGIN {
 }
 
 END {
+    if (is_exit) exit 1
+
     if (sum_amt > 0) {
         printf("--------------------------------------------------------------------\n")
         printf("%-12s %-30s %9.2f    %-10s\n", "Totals", "", sum_amt, "")

@@ -86,6 +86,7 @@ BEGIN {
 
     if (i < ARGC) {
         printf("Illegal parameter '%s'\n", ARGV[i])
+        is_exit = 1
         exit 1
     }
 
@@ -103,6 +104,8 @@ BEGIN {
 }
 
 END {
+    if (is_exit) exit 1
+
     # Print categories from highest to lowest total expense amount.
     # Category subtotals are stored in cat_total array. Ex.
     #   cat_total["commute"]:  120.35
