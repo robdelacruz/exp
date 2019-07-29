@@ -13,8 +13,8 @@ License:
 Manual:
 
 Add an expense -
-  exp-add.sh "bus fare" 12.00 commute 2019-04-01 08:00
-  exp-add.sh "buy cat food" 160.50 grocery
+  $ exp-add.sh "bus fare" 12.00 commute 2019-04-01 08:00
+  $ exp-add.sh "buy cat food" 160.50 grocery
 
 List all expense items by year, year/month, year/month/day, date range
   $ exp-list.awk 2019
