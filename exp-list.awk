@@ -65,6 +65,11 @@ BEGIN {
     enddt = ""
 
     i=1
+    if (ARGV[i] == "--recno") {
+        show_recno = 1
+        i++
+    }
+
     if (is_cat(ARGV[i])) {
         cat = ARGV[i]
         ARGV[i]=""
@@ -140,7 +145,12 @@ END {
 #
 
 function print_rec() {
-    printf("%-12s %-30s %9.2f  %-10s\n", $1, substr($3, 0, 30), $4, $5)
+    #printf("%-12s %-30s %9.2f  %-10s\n", $1, substr($3, 0, 30), $4, $5)
+
+    if (show_recno)
+        printf("#%-5d %-12s %-30s %9.2f  %-10s\n", NR, $1, substr($3, 0, 30), $4, $5)
+    else 
+        printf("%-12s %-30s %9.2f  %-10s\n", $1, substr($3, 0, 30), $4, $5)
 
     sum_amt = sum_amt + $4
 }
