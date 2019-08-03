@@ -2,7 +2,6 @@
 
 function print_params() {
     print "------------------------------"
-    printf("recno: '%d'\n", recno)
     printf("tmpfile: '%s'\n", tmpfile)
     printf("\nexpfile: '%s'\n", expfile)
     print "------------------------------"
@@ -34,21 +33,6 @@ BEGIN {
         }
     }
 
-
-    if (ARGC > 2) {
-        printf("Illegal parameter '%s'\n", ARGV[2])
-        is_exit = 1
-        exit 1
-    }
-
-    if (ARGV[1] ~ /^[0-9]+$/) {
-        recno = ARGV[1]
-    } else {
-        printf("Specify record number to delete\n")
-        is_exit = 1
-        exit 1
-    }
-
     #$$ Need to clean up tmp files?
     "echo /tmp/expenses$$" | getline tmpfile
     system("rm -f " tmpfile)
@@ -62,25 +46,13 @@ BEGIN {
 }
 
 END {
-    if (is_exit) exit 1
-
-    if (recline == "") {
-        print "No record to delete."
-        exit 1
-    }
-
-    print recline
-    printf("Delete? (y/n): ")
-    getline ans < "-"
-    if (ans != "y" && ans != "Y") {
-        exit 1
-    }
+    # Sort tmpfile in place: sort -o /tmp/expenses$$ /tmp/expenses$$
+    cmd = "sort -o " tmpfile " " tmpfile
+    system(cmd)
 
     # cp /tmp/expenses$$ /home/user/.expenses
     cmd = "cp " tmpfile " " expfile
     system(cmd)
-
-    print "Record deleted."
 }
 
 #
@@ -95,6 +67,6 @@ END {
 # Ex. 2019-07-27;01:16;cat food at rustan's;123.45;grocery
 #
 
-recno != NR { print >> tmpfile }
-recno == NR { recline = $0 }
+# Skip over any blank lines.
+$0 !~ /^[ \t]*$/ { print >> tmpfile }
 

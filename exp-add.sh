@@ -69,7 +69,9 @@ fi
 
 printf "%s; %s; %s; %s; %s\n" "$dt" "$tm" "$desc" "$amt" "$cat"
 printf "%s; %s; %s; %s; %s\n" "$dt" "$tm" "$desc" "$amt" "$cat" >> "$EXPFILE"
+
+# Re-sort expenses file in chronological date order.
+exp-sort.awk
+
 exit 0
-
-
 
