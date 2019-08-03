@@ -65,11 +65,6 @@ BEGIN {
     enddt = ""
 
     i=1
-    if (ARGV[i] == "--recno") {
-        show_recno = 1
-        i++
-    }
-
     if (is_cat(ARGV[i])) {
         cat = ARGV[i]
         ARGV[i]=""
@@ -102,6 +97,11 @@ BEGIN {
             printf("Illegal parameter '%s'\n", ARGV[i])
             exit 1
         }
+    }
+
+    if (ARGV[i] == "--recno") {
+        show_recno = 1
+        i++
     }
 
     if (i < ARGC) {

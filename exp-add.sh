@@ -45,7 +45,7 @@ fi
 
 # no date specified, use current date.
 if [ "$dt" = "" ]; then
-    dt=$(date -I)
+    dt=$(date +%Y-%m-%d)
 fi
 
 # no time specified, use current time.
