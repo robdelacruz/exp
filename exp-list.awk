@@ -93,7 +93,7 @@ BEGIN {
             ARGV[i]=""
             yyyy_mm_dd = ""
             i++
-        } else {
+        } else if (ARGV[i] != "--recno") {
             printf("Illegal parameter '%s'\n", ARGV[i])
             exit 1
         }
