@@ -93,15 +93,10 @@ BEGIN {
             ARGV[i]=""
             yyyy_mm_dd = ""
             i++
-        } else if (ARGV[i] != "--recno") {
+        } else {
             printf("Illegal parameter '%s'\n", ARGV[i])
             exit 1
         }
-    }
-
-    if (ARGV[i] == "--recno") {
-        show_recno = 1
-        i++
     }
 
     if (i < ARGC) {
@@ -127,7 +122,7 @@ END {
     if (is_exit) exit 1
 
     if (sum_amt > 0) {
-        printf("--------------------------------------------------------------------\n")
+        printf("------------------------------------------------------------------------\n")
         printf("%-12s %-30s %9.2f    %-10s\n", "Totals", "", sum_amt, "")
     }
 }
@@ -145,13 +140,7 @@ END {
 #
 
 function print_rec() {
-    #printf("%-12s %-30s %9.2f  %-10s\n", $1, substr($3, 0, 30), $4, $5)
-
-    if (show_recno)
-        printf("#%-5d %-12s %-30s %9.2f  %-10s\n", NR, $1, substr($3, 0, 30), $4, $5)
-    else 
-        printf("%-12s %-30s %9.2f  %-10s\n", $1, substr($3, 0, 30), $4, $5)
-
+    printf("%-12s %-30s %9.2f  %-10s  #%-5d\n", $1, substr($3, 0, 30), $4, $5, NR)
     sum_amt = sum_amt + $4
 }
 
