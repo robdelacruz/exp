@@ -33,6 +33,15 @@ List all expense items by year, year/month, year/month/day, date range
     --------------------------------------------------------------------
     Totals                                         979.00              
 
+List all expense of category 'dine_out' by year, year/month, year/month/day, date range
+
+  $ exp-list.awk dine_out 2019
+  $ exp-list.awk dine_out 2019-04
+  $ exp-list.awk dine_out 2019-04-01
+  $ exp-list.awk dine_out 2019-04-01 2019-04-30
+
+If exp-list.awk is run without any parameters, it defaults to the current year/month.
+
 
 List category totals by year, year/month, year/month/day, date range
   $ exp-cat.awk 2019
@@ -52,6 +61,8 @@ List category totals by year, year/month, year/month/day, date range
     movie             585.00
     ----------------------------
     Totals         215081.51
+
+If exp-cat.awk is run without any parameters, it defaults to the current year.
 
 
 List year totals -
@@ -73,9 +84,11 @@ List year totals -
     December            0.00
     ------------------------
     Totals         215081.51
-  
+
+If exp-ytd.awk is run without any parameters, it defaults to the current year.
+
 
 Contact:
   Twitter: @robdelacruz
-  Source: http://github.com/robdelacruz/witness
+  Source: http://github.com/robdelacruz/exp
 
