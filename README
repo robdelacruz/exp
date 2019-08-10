@@ -13,14 +13,14 @@ License:
 Manual:
 
 Add an expense -
-  $ exp-add.sh "bus fare" 12.00 commute 2019-04-01 08:00
-  $ exp-add.sh "buy cat food" 160.50 grocery
+  $ exp add "bus fare" 12.00 commute 2019-04-01 08:00
+  $ exp add "buy cat food" 160.50 grocery
 
 List all expense items by year, year/month, year/month/day, date range
-  $ exp-list.awk 2019
-  $ exp-list.awk 2019-04
-  $ exp-list.awk 2019-04-01
-  $ exp-list.awk 2019-04-01 2019-04-30
+  $ exp list 2019
+  $ exp list 2019-04
+  $ exp list 2019-04-01
+  $ exp list 2019-04-01 2019-04-30
 
     (sample output)
 
@@ -35,19 +35,19 @@ List all expense items by year, year/month, year/month/day, date range
 
 List all expense of category 'dine_out' by year, year/month, year/month/day, date range
 
-  $ exp-list.awk dine_out 2019
-  $ exp-list.awk dine_out 2019-04
-  $ exp-list.awk dine_out 2019-04-01
-  $ exp-list.awk dine_out 2019-04-01 2019-04-30
+  $ exp list dine_out 2019
+  $ exp list dine_out 2019-04
+  $ exp list dine_out 2019-04-01
+  $ exp list dine_out 2019-04-01 2019-04-30
 
-If exp-list.awk is run without any parameters, it defaults to the current year/month.
+If 'exp list' is run without any parameters, it defaults to the current year/month.
 
 
 List category totals by year, year/month, year/month/day, date range
-  $ exp-cat.awk 2019
-  $ exp-cat.awk 2019-04
-  $ exp-cat.awk 2019-04-01
-  $ exp-cat.awk 2019-04-01 2019-04-30
+  $ exp cat 2019
+  $ exp cat 2019-04
+  $ exp cat 2019-04-01
+  $ exp cat 2019-04-01 2019-04-30
 
     (sample output)
 
@@ -62,11 +62,11 @@ List category totals by year, year/month, year/month/day, date range
     ----------------------------
     Totals         215081.51
 
-If exp-cat.awk is run without any parameters, it defaults to the current year.
+If 'exp cat' is run without any parameters, it defaults to the current year.
 
 
 List year totals -
-  $ exp-ytd.awk 2019
+  $ exp ytd 2019
 
     (sample output)
 
@@ -85,7 +85,7 @@ List year totals -
     ------------------------
     Totals         215081.51
 
-If exp-ytd.awk is run without any parameters, it defaults to the current year.
+If 'exp ytd' is run without any parameters, it defaults to the current year.
 
 
 Contact:

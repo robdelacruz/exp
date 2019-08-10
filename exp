@@ -16,6 +16,7 @@ Commands:
     del     delete an expense
     list    display list of expenses 
     cat     display category subtotals
+    ytd     display year to date subtotals
 
 Examples:
     exp add DESC AMT CAT [DATE] [TIME]
@@ -23,6 +24,7 @@ Examples:
     exp del RECNO
     exp list [CAT] [YYYY | YYYY-MM | YYYY-MM-DD | YYYY-MM-DD YYYY-MM-DD]
     exp cat [YYYY | YYYY-MM | YYYY-MM-DD | YYYY-MM-DD YYYY-MM-DD]
+    exp ytd YYYY
 '
 }
 
@@ -48,6 +50,9 @@ case "$cmd" in
     ;;
 "cat")
     exp-cat.awk $*
+    ;;
+"ytd")
+    exp-ytd.awk $*
     ;;
 *)
     print_usage
