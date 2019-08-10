@@ -1,0 +1,58 @@
+#!/bin/sh
+
+EXPFILE=${EXPFILE:-~/.expenses}
+
+cmd=$1
+
+print_usage() {
+    echo 'Usage:
+
+    exp <command> [arguments]
+
+Commands:
+
+    add     add an expense
+    edit    edit an expense
+    del     delete an expense
+    list    display list of expenses 
+    cat     display category subtotals
+
+Examples:
+    exp add DESC AMT CAT [DATE] [TIME]
+    exp edit RECNO
+    exp del RECNO
+    exp list [CAT] [YYYY | YYYY-MM | YYYY-MM-DD | YYYY-MM-DD YYYY-MM-DD]
+    exp cat [YYYY | YYYY-MM | YYYY-MM-DD | YYYY-MM-DD YYYY-MM-DD]
+'
+}
+
+if [ "$cmd" = "" ]; then
+    print_usage
+    exit 1
+fi
+
+shift
+
+case "$cmd" in 
+"add")
+    exp-add.sh "$1" "$2" "$3" "$4" "$5"
+    ;;
+"edit")
+    exp-edit.awk $*
+    ;;
+"del")
+    exp-del.awk $*
+    ;;
+"list")
+    exp-list.awk "$1" "$2" "$3"
+    ;;
+"cat")
+    exp-cat.awk $*
+    ;;
+*)
+    print_usage
+    exit 1
+esac
+
+exit 0
+

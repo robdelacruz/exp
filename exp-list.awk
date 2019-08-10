@@ -93,16 +93,7 @@ BEGIN {
             ARGV[i]=""
             yyyy_mm_dd = ""
             i++
-        } else {
-            printf("Illegal parameter '%s'\n", ARGV[i])
-            exit 1
         }
-    }
-
-    if (i < ARGC) {
-        printf("Illegal parameter '%s'\n", ARGV[i])
-        is_exit = 1
-        exit 1
     }
 
     # If no date specified, default to current yyyy-mm
