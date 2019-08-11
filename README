@@ -103,9 +103,15 @@ Edit an expense -
 
 
 Delete an expense -
-  This operation is similar to editing an expense. Use 'exp del <recno>' instead.
+  First, get the record number by reading the rightmost #nnnn column from
+  'exp list' command.
 
-  You will be prompted whether you want to delete the expense.
+  Then specify the record number in 'exp del <recno>' command. You will be 
+  prompted whether to delete the record.
+
+  Example:
+  $ exp list 2019-04-01   (find the #nnnn record number in the rightmost column)
+  $ exp del 1895         (where #1895 was displayed from the 'exp list' command)
 
 
 Contact:
