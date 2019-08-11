@@ -5,7 +5,9 @@ EXPFILE=${EXPFILE:-~/.expenses}
 cmd=$1
 
 print_usage() {
-    echo 'Usage:
+    echo 'exp - Utility for keeping track and reporting of daily expenses.
+
+Usage:
 
     exp <command> [arguments]
 
@@ -18,6 +20,8 @@ Commands:
     cat     display category subtotals
     ytd     display year to date subtotals
 
+Use "exp help [command]" to display information about a command.
+
 Examples:
     exp add DESC AMT CAT [DATE] [TIME]
     exp edit RECNO
@@ -25,6 +29,140 @@ Examples:
     exp list [CAT] [YYYY | YYYY-MM | YYYY-MM-DD | YYYY-MM-DD YYYY-MM-DD]
     exp cat [YYYY | YYYY-MM | YYYY-MM-DD | YYYY-MM-DD YYYY-MM-DD]
     exp ytd [YYYY]
+
+    exp help
+    exp help add
+    exp help edit
+'
+}
+
+print_usage_add() {
+    echo 'exp add - Add a new expense.
+
+Usage:
+
+    exp add DESC AMT CAT [DATE] [TIME]
+
+    DESC : short description of expense
+    AMT  : numeric amount
+    CAT  : unique category name
+    DATE : optional - date in iso date format YYYY-MM-DD
+    TIME : optional - time in HH:MM format
+
+    if DATE and TIME are not specified, the current date and time will be used.
+
+Example:
+    exp add "expense description" 1.23 category_name 2019-04-01 17:30
+    exp add "buy groceries" 250.00 groceries
+'
+}
+
+print_usage_edit() {
+    echo 'exp edit - Edit an existing expense.
+
+Usage:
+
+    exp edit RECNO
+
+    RECNO : record number of expense to edit
+
+    The record number is the #nnn number in rightmost column of the expense
+    displayed from the [exp list] command.
+
+Example:
+    exp edit 1895
+'
+}
+
+print_usage_del() {
+    echo 'exp del - Delete an existing expense.
+
+Usage:
+
+    exp del RECNO
+
+    RECNO : record number of expense to delete
+
+    The record number is the #nnn number in rightmost column of the expense
+    displayed from the [exp list] command.
+
+Example:
+    exp del 1895
+'
+}
+
+print_usage_list() {
+    echo 'exp list - List expenses by a filter.
+    
+Usage:
+
+    exp list [CAT] [YEAR | YEAR-MONTH | DATE | STARTDATE ENDDATE]
+
+    CAT         : category
+    YEAR        : year in YYYY format
+    YEAR-MONTH  : year and month in YYYY-MM format 
+    DATE        : date in iso date format YYYY-MM-DD
+    STARTDATE   : start date in iso date format YYYY-MM-DD
+    ENDDATE     : end date in iso date format YYYY-MM-DD
+
+    Specify CAT to show only expenses of this category.
+    Specify YEAR to show expenses occurring on that year.
+    Specify YEAR-MONTH to show expenses occurring on that month.
+    Specify DATE to show expenses occurring on that date.
+    Specify STARTDATE and/or ENDDATE to specify a date range.
+
+Example:
+    exp list dine_out
+    exp list dine_out 2019
+    exp list dine_out 2019-04
+    exp list dine_out 2019-04-01
+    exp list dine_out 2019-04-01 2019-04-30
+
+    exp list 2019
+    exp list 2019-04
+    exp list 2019-04-01
+    exp list 2019-04-01 2019-04-30
+'
+}
+
+print_usage_cat() {
+    echo 'exp cat - Show category subtotals of expenses.
+
+Usage:
+
+    exp cat [YEAR | YEAR-MONTH | DATE | STARTDATE ENDDATE]
+
+    YEAR        : year in YYYY format
+    YEAR-MONTH  : year and month in YYYY-MM format 
+    DATE        : date in iso date format YYYY-MM-DD
+    STARTDATE   : start date in iso date format YYYY-MM-DD
+    ENDDATE     : end date in iso date format YYYY-MM-DD
+
+    Specify YEAR to show expenses occurring on that year.
+    Specify YEAR-MONTH to show expenses occurring on that month.
+    Specify DATE to show expenses occurring on that date.
+    Specify STARTDATE and/or ENDDATE to specify a date range.
+
+    If called without any parameters, the current month will be displayed.
+
+Example:
+    exp cat 2019
+    exp cat 2019-04
+    exp cat 2019-04-01
+    exp cat 2019-04-01 2019-04-30
+'
+}
+
+print_usage_ytd() {
+    echo 'exp ytd - Show year-to-date subtotals of expenses.
+
+Usage:
+
+    exp ytd [YEAR]
+
+    YEAR  : year in YYYY format
+
+    If called without any parameters, the current year will be displayed.
 '
 }
 
@@ -37,12 +175,24 @@ shift
 
 case "$cmd" in 
 "add")
+    if [ "$1" = "" -o "$2" = "" -o "$3" = "" ]; then
+        print_usage_add
+        exit 1
+    fi
     exp-add.sh "$1" "$2" "$3" "$4" "$5"
     ;;
 "edit")
+    if [ "$1" = "" ]; then
+        print_usage_edit
+        exit 1
+    fi
     exp-edit.awk $*
     ;;
 "del")
+    if [ "$1" = "" ]; then
+        print_usage_del
+        exit 1
+    fi
     exp-del.awk $*
     ;;
 "list")
@@ -53,6 +203,30 @@ case "$cmd" in
     ;;
 "ytd")
     exp-ytd.awk $*
+    ;;
+"help")
+    if [ "$1" = "add" ]; then
+        print_usage_add
+        exit 0
+    elif [ "$1" = "edit" ]; then
+        print_usage_edit
+        exit 0
+    elif [ "$1" = "del" ]; then
+        print_usage_del
+        exit 0
+    elif [ "$1" = "list" ]; then
+        print_usage_list
+        exit 0
+    elif [ "$1" = "cat" ]; then
+        print_usage_cat
+        exit 0
+    elif [ "$1" = "ytd" ]; then
+        print_usage_ytd
+        exit 0
+    else
+        print_usage
+        exit 0
+    fi
     ;;
 *)
     print_usage
