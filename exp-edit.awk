@@ -133,7 +133,10 @@ END {
     # cp /tmp/expenses$$ /home/user/.expenses
     cmd = "cp " tmpfile " " expfile
     system(cmd)
-    system("exp-sort.awk")
+
+    # exp-sort.awk
+    sharedir="/usr/local/share/exp"
+    system(sharedir "exp-sort.awk")
 
     printf("New record:\n%s\n", new_rec)
 }

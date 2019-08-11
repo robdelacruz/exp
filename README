@@ -12,6 +12,14 @@ License:
 
 Manual:
 
+Installation -
+  $ sudo make install
+
+  This will install to /usr/local/share/exp and /usr/local/bin.
+
+  To uninstall:
+  $ sudo make uninstall
+
 Run 'exp help' and 'exp help [command]' for more information.
 
 Set the EXPFILE env var to set the active expense file. If EXPFILE is not set, 

@@ -1,6 +1,7 @@
 #!/bin/sh
 
 EXPFILE=${EXPFILE:-~/.expenses}
+SHAREDIR=/usr/local/share/exp
 
 cmd=$1
 
@@ -191,30 +192,30 @@ case "$cmd" in
         print_usage_add
         exit 1
     fi
-    exp-add.sh "$1" "$2" "$3" "$4" "$5"
+    $SHAREDIR/exp-add.sh "$1" "$2" "$3" "$4" "$5"
     ;;
 "edit")
     if [ "$1" = "" ]; then
         print_usage_edit
         exit 1
     fi
-    exp-edit.awk $*
+    $SHAREDIR/exp-edit.awk $*
     ;;
 "del")
     if [ "$1" = "" ]; then
         print_usage_del
         exit 1
     fi
-    exp-del.awk $*
+    $SHAREDIR/exp-del.awk $*
     ;;
 "list")
-    exp-list.awk "$1" "$2" "$3"
+    $SHAREDIR/exp-list.awk "$1" "$2" "$3"
     ;;
 "cat")
-    exp-cat.awk $*
+    $SHAREDIR/exp-cat.awk $*
     ;;
 "ytd")
-    exp-ytd.awk $*
+    $SHAREDIR/exp-ytd.awk $*
     ;;
 "info")
     print_info

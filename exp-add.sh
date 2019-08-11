@@ -1,6 +1,7 @@
 #!/bin/sh
 
 EXPFILE=${EXPFILE:-~/.expenses}
+SHAREDIR=/usr/local/share/exp
 
 desc=$1
 amt=$2
@@ -71,7 +72,7 @@ printf "%s; %s; %s; %s; %s\n" "$dt" "$tm" "$desc" "$amt" "$cat"
 printf "%s; %s; %s; %s; %s\n" "$dt" "$tm" "$desc" "$amt" "$cat" >> "$EXPFILE"
 
 # Re-sort expenses file in chronological date order.
-exp-sort.awk
+$SHAREDIR/exp-sort.awk
 
 exit 0
 
