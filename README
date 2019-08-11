@@ -14,6 +14,9 @@ Manual:
 
 Run 'exp help' and 'exp help [command]' for more information.
 
+Set the EXPFILE env var to set the active expense file. If EXPFILE is not set, 
+by default the ~/.expenses file will be used.
+
 Add an expense -
   $ exp add "bus fare" 12.00 commute 2019-04-01 08:00
   $ exp add "buy cat food" 160.50 grocery

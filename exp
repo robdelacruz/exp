@@ -19,6 +19,7 @@ Commands:
     list    display list of expenses 
     cat     display category subtotals
     ytd     display year to date subtotals
+    info    display expense file location and other info
 
 Use "exp help [command]" to display information about a command.
 
@@ -166,6 +167,17 @@ Usage:
 '
 }
 
+print_info() {
+    echo "Expense Buddy console version
+
+    expense file  : $EXPFILE
+    website       : https://github.com/robdelacruz/exp 
+
+Set the EXPFILE env var to change the active expense file.
+Expense file will be created automatically when you add an expense.
+"
+}
+
 if [ "$cmd" = "" ]; then
     print_usage
     exit 1
@@ -204,6 +216,10 @@ case "$cmd" in
 "ytd")
     exp-ytd.awk $*
     ;;
+"info")
+    print_info
+    exit 0
+    ;;
 "help")
     if [ "$1" = "add" ]; then
         print_usage_add
@@ -222,6 +238,9 @@ case "$cmd" in
         exit 0
     elif [ "$1" = "ytd" ]; then
         print_usage_ytd
+        exit 0
+    elif [ "$1" = "info" ]; then
+        print_info
         exit 0
     else
         print_usage
