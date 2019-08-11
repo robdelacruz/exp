@@ -12,6 +12,8 @@ License:
 
 Manual:
 
+Run 'exp help' and 'exp help [command]' for more information.
+
 Add an expense -
   $ exp add "bus fare" 12.00 commute 2019-04-01 08:00
   $ exp add "buy cat food" 160.50 grocery
@@ -24,14 +26,14 @@ List all expense items by year, year/month, year/month/day, date range
 
     (sample output)
 
-    2017-01-06   cedula pasig                       41.00  utilities 
-    2017-01-06   pbco coffee                        85.00  coffee    
-    2017-01-06   peri peri capital commons         441.00  dine_out  
-    2017-01-06   taxi to capital commons           100.00  commute   
-    2017-01-06   uber to home                      169.00  commute   
-    2017-01-06   uber to pasig                     143.00  commute   
+    2019-04-06   pay water bill                    123.45  utilities 
+    2019-04-06   donuts and coffee                 185.00  coffee    
+    2019-04-07   dinner at peri peri               441.00  dine_out  
+    2019-04-21   taxi to capitol commons           100.00  commute   
+    2019-04-22   uber to home                      169.00  commute   
+    2019-04-22   uber to office                    143.00  commute   
     --------------------------------------------------------------------
-    Totals                                         979.00              
+    Totals                                        1161.45              
 
 List all expense of category 'dine_out' by year, year/month, year/month/day, date range
 
@@ -86,6 +88,24 @@ List year totals -
     Totals         215081.51
 
 If 'exp ytd' is run without any parameters, it defaults to the current year.
+
+
+Edit an expense -
+  First, get the record number by reading the rightmost #nnnn column from
+  'exp list' command.
+
+  Then specify the record number in 'exp edit <recno>' command. You will be 
+  prompted interactively to edit each field in the expense.
+
+  Example:
+  $ exp list 2019-04-01   (find the #nnnn record number in the rightmost column)
+  $ exp edit 1895         (where #1895 was displayed from the 'exp list' command)
+
+
+Delete an expense -
+  This operation is similar to editing an expense. Use 'exp del <recno>' instead.
+
+  You will be prompted whether you want to delete the expense.
 
 
 Contact:
