@@ -135,7 +135,7 @@ END {
     system(cmd)
 
     # exp-sort.awk
-    sharedir="/usr/local/share/exp"
+    sharedir="/usr/local/share/exp/"
     system(sharedir "exp-sort.awk")
 
     printf("New record:\n%s\n", new_rec)
